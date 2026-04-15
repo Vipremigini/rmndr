@@ -76,33 +76,35 @@
 </div>
 
 <script>
-    // 1. DATA: Add or remove deadlines here
+    // UPDATED DATA ARRAY
     const deadlines = [
         { title: "10 Page Bio Assignment", category: "Biology", date: "2026-04-16" },
         { title: "Sensors Observation Note", category: "Lab Work", date: "2026-04-16" },
         { title: "Math Assignment", category: "Mathematics", date: "2026-04-20" },
-        { title: "Sensors Project Submission", category: "Engineering", date: "2026-04-24" }
+        { title: "Sensors Project Submission", category: "Engineering", date: "2026-04-24" },
+        { title: "BIO CT4", category: "Portions: Unit 3, 4, 5 Full", date: "2026-04-29" }
     ];
 
     function updateDashboard() {
         const container = document.getElementById('deadline-container');
         const dateDisplay = document.getElementById('current-date');
         
-        // Set today's date display
         const now = new Date();
+        // Normalizing 'now' to the start of the day for accurate "Days Left" counts
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
         dateDisplay.innerText = now.toLocaleDateString('en-GB', { 
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
         });
 
-        // Clear container
         container.innerHTML = '';
 
-        // Sort deadlines by date (closest first)
+        // Sort deadlines by date
         deadlines.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         deadlines.forEach(item => {
             const dueDate = new Date(item.date);
-            const diffTime = dueDate - now;
+            const diffTime = dueDate - today;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             let statusText = "";
@@ -113,7 +115,6 @@
             else if (diffDays < 0) statusText = "Overdue";
             else statusText = `${diffDays} Days Left`;
 
-            // Create HTML structure
             const card = document.createElement('div');
             card.className = `deadline-card ${isUrgent ? 'urgent' : ''}`;
             
@@ -132,7 +133,6 @@
         });
     }
 
-    // Initialize
     updateDashboard();
 </script>
 
