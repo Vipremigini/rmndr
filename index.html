@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMNDR // Upcoming Deadlines</title>
+    <title>RMNDR // Dynamic</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
@@ -24,34 +24,13 @@
             padding: 40px 20px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
+        .container { width: 100%; max-width: 600px; }
 
-        header {
-            margin-bottom: 40px;
-            text-align: center;
-        }
+        header { margin-bottom: 40px; text-align: center; }
+        h1 { letter-spacing: 4px; font-weight: 800; color: var(--accent); margin: 0; }
+        #current-date { color: var(--text-dim); font-size: 0.9rem; margin-top: 8px; }
 
-        h1 {
-            letter-spacing: 4px;
-            font-weight: 800;
-            color: var(--accent);
-            margin: 0;
-        }
-
-        .subtitle {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            margin-top: 8px;
-        }
-
-        .deadline-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .deadline-list { display: flex; flex-direction: column; gap: 16px; }
 
         .deadline-card {
             background: var(--card-bg);
@@ -61,50 +40,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
         }
 
-        .deadline-card:hover {
-            transform: translateX(5px);
-            border-color: var(--accent);
-        }
+        .info h3 { margin: 0; font-size: 1.1rem; }
+        .info p { margin: 4px 0 0; color: var(--text-dim); font-size: 0.85rem; }
 
-        .info h3 {
-            margin: 0;
-            font-size: 1.1rem;
-        }
-
-        .info p {
-            margin: 4px 0 0;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-
-        .status {
-            text-align: right;
-        }
-
+        .status { text-align: right; }
         .days-left {
             display: block;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             padding: 4px 12px;
             border-radius: 20px;
             background: rgba(56, 189, 248, 0.1);
             color: var(--accent);
         }
 
-        .urgent .days-left {
-            background: rgba(244, 63, 94, 0.1);
-            color: var(--urgent);
-        }
+        .urgent { border-left: 4px solid var(--urgent); }
+        .urgent .days-left { background: rgba(244, 63, 94, 0.1); color: var(--urgent); }
 
-        .date-label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-top: 6px;
-        }
+        .date-label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
     </style>
 </head>
 <body>
@@ -112,55 +68,73 @@
 <div class="container">
     <header>
         <h1>RMNDR</h1>
-        <p class="subtitle">April 15, 2026</p>
+        <div id="current-date"></div>
     </header>
 
-    <div class="deadline-list">
-        <div class="deadline-card urgent">
-            <div class="info">
-                <h3>10-Page Bio submission</h3>
-                <p>Assignment</p>
-            </div>
-            <div class="status">
-                <span class="days-left">Due Tomorrow</span>
-                <span class="date-label">16/04/26</span>
-            </div>
+    <div id="deadline-container" class="deadline-list">
         </div>
-
-        <div class="deadline-card urgent">
-            <div class="info">
-                <h3>Sensors Observation Note</h3>
-                <p>Lab Notes</p>
-            </div>
-            <div class="status">
-                <span class="days-left">Due Tomorrow</span>
-                <span class="date-label">16/04/26</span>
-            </div>
-        </div>
-
-        <div class="deadline-card">
-            <div class="info">
-                <h3>Math Assignment</h3>
-                <p>Calculus / Linear Algebra</p>
-            </div>
-            <div class="status">
-                <span class="days-left">5 Days Left</span>
-                <span class="date-label">20/04/26</span>
-            </div>
-        </div>
-
-        <div class="deadline-card">
-            <div class="info">
-                <h3>Sensors Project Submission</h3>
-                <p>Final Portfolio</p>
-            </div>
-            <div class="status">
-                <span class="days-left">9 Days Left</span>
-                <span class="date-label">24/04/26</span>
-            </div>
-        </div>
-    </div>
 </div>
+
+<script>
+    // 1. DATA: Add or remove deadlines here
+    const deadlines = [
+        { title: "10 Page Bio Assignment", category: "Biology", date: "2026-04-16" },
+        { title: "Sensors Observation Note", category: "Lab Work", date: "2026-04-16" },
+        { title: "Math Assignment", category: "Mathematics", date: "2026-04-20" },
+        { title: "Sensors Project Submission", category: "Engineering", date: "2026-04-24" }
+    ];
+
+    function updateDashboard() {
+        const container = document.getElementById('deadline-container');
+        const dateDisplay = document.getElementById('current-date');
+        
+        // Set today's date display
+        const now = new Date();
+        dateDisplay.innerText = now.toLocaleDateString('en-GB', { 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+        });
+
+        // Clear container
+        container.innerHTML = '';
+
+        // Sort deadlines by date (closest first)
+        deadlines.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        deadlines.forEach(item => {
+            const dueDate = new Date(item.date);
+            const diffTime = dueDate - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            let statusText = "";
+            let isUrgent = diffDays <= 1;
+
+            if (diffDays === 0) statusText = "Due Today";
+            else if (diffDays === 1) statusText = "Due Tomorrow";
+            else if (diffDays < 0) statusText = "Overdue";
+            else statusText = `${diffDays} Days Left`;
+
+            // Create HTML structure
+            const card = document.createElement('div');
+            card.className = `deadline-card ${isUrgent ? 'urgent' : ''}`;
+            
+            card.innerHTML = `
+                <div class="info">
+                    <h3>${item.title}</h3>
+                    <p>${item.category}</p>
+                </div>
+                <div class="status">
+                    <span class="days-left">${statusText}</span>
+                    <span class="date-label">${dueDate.toLocaleDateString('en-GB')}</span>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    }
+
+    // Initialize
+    updateDashboard();
+</script>
 
 </body>
 </html>
