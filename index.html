@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMNDR // Upcoming Deadlines</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --urgent: #f43f5e;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            letter-spacing: 4px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .deadline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .deadline-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .deadline-card:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+        }
+
+        .info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .info p {
+            margin: 4px 0 0;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .status {
+            text-align: right;
+        }
+
+        .days-left {
+            display: block;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+        }
+
+        .urgent .days-left {
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--urgent);
+        }
+
+        .date-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>RMNDR</h1>
+        <p class="subtitle">April 15, 2026</p>
+    </header>
+
+    <div class="deadline-list">
+        <div class="deadline-card urgent">
+            <div class="info">
+                <h3>10-Page Bio submission</h3>
+                <p>Assignment</p>
+            </div>
+            <div class="status">
+                <span class="days-left">Due Tomorrow</span>
+                <span class="date-label">16/04/26</span>
+            </div>
+        </div>
+
+        <div class="deadline-card urgent">
+            <div class="info">
+                <h3>Sensors Observation Note</h3>
+                <p>Lab Notes</p>
+            </div>
+            <div class="status">
+                <span class="days-left">Due Tomorrow</span>
+                <span class="date-label">16/04/26</span>
+            </div>
+        </div>
+
+        <div class="deadline-card">
+            <div class="info">
+                <h3>Math Assignment</h3>
+                <p>Calculus / Linear Algebra</p>
+            </div>
+            <div class="status">
+                <span class="days-left">5 Days Left</span>
+                <span class="date-label">20/04/26</span>
+            </div>
+        </div>
+
+        <div class="deadline-card">
+            <div class="info">
+                <h3>Sensors Project Submission</h3>
+                <p>Final Portfolio</p>
+            </div>
+            <div class="status">
+                <span class="days-left">9 Days Left</span>
+                <span class="date-label">24/04/26</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
