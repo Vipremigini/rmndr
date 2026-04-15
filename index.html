@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMNDR // Dynamic</title>
+    <title>RMNDR // Fixed</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
@@ -46,9 +46,9 @@
         .info h3 { margin: 0; font-size: 1.1rem; }
         .info p { margin: 4px 0 0; color: var(--text-dim); font-size: 0.85rem; }
 
-        .status { text-align: right; }
+        .status { text-align: right; min-width: 100px; }
         .days-left {
-            display: block;
+            display: inline-block;
             font-weight: bold;
             font-size: 0.85rem;
             padding: 4px 12px;
@@ -71,12 +71,10 @@
         <div id="current-date"></div>
     </header>
 
-    <div id="deadline-container" class="deadline-list">
-        </div>
+    <div id="deadline-container" class="deadline-list"></div>
 </div>
 
 <script>
-    // UPDATED DATA ARRAY
     const deadlines = [
         { title: "10 Page Bio Assignment", category: "Biology", date: "2026-04-16" },
         { title: "Sensors Observation Note", category: "Lab Work", date: "2026-04-16" },
@@ -89,23 +87,25 @@
         const container = document.getElementById('deadline-container');
         const dateDisplay = document.getElementById('current-date');
         
+        // 1. Get today's date and strip the time (Local Time)
         const now = new Date();
-        // Normalizing 'now' to the start of the day for accurate "Days Left" counts
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         dateDisplay.innerText = now.toLocaleDateString('en-GB', { 
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
         });
 
         container.innerHTML = '';
-
-        // Sort deadlines by date
         deadlines.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         deadlines.forEach(item => {
-            const dueDate = new Date(item.date);
+            // 2. Force the due date to be parsed as Local Time, not UTC
+            const parts = item.date.split('-');
+            const dueDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            // 3. Calculate difference in whole days
             const diffTime = dueDate - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
             
             let statusText = "";
             let isUrgent = diffDays <= 1;
